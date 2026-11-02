@@ -46,6 +46,7 @@
         in
         {
           default = pkgs.mkShell {
+            name = "nix-pwn";
             packages = pwnPackages pkgs;
           };
         }
