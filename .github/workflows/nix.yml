@@ -1,0 +1,19 @@
+name: Nix formatting
+
+on: [push, pull_request]
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: DeterminateSystems/nix-installer-action@v21
+
+      - name: Install dependencies
+        run: |
+          nix profile add nixpkgs#nixfmt
+          nix profile add nixpkgs#pre-commit
+
+      - name: Check formatting
+        run: pre-commit run --all-files
