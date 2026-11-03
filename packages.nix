@@ -1,7 +1,7 @@
-
 { pkgs, pwndbgPackage }:
 
-with pkgs; [
+with pkgs;
+[
   # Debugging
   gdb
   pwndbgPackage
@@ -12,9 +12,11 @@ with pkgs; [
   file
 
   # Exploitation
-  (python3.withPackages (ps: with ps; [
-    pwntools
-  ]))
+  (python3.withPackages (
+    ps: with ps; [
+      pwntools
+    ]
+  ))
 
   # Utilities
   patchelf
@@ -22,4 +24,3 @@ with pkgs; [
   ltrace
   checksec
 ]
-

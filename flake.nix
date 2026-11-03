@@ -1,4 +1,3 @@
-
 {
   description = "Pwn environment";
 
@@ -7,7 +6,8 @@
     pwndbg.url = "github:pwndbg/pwndbg";
   };
 
-  outputs = { nixpkgs, pwndbg, ... }:
+  outputs =
+    { nixpkgs, pwndbg, ... }:
     let
       systems = [
         "x86_64-linux"
@@ -23,24 +23,26 @@
 
         pkgs
         : Nixpkgs package set for the target system.
-
       */
-      pwnPackages = pkgs:
+      pwnPackages =
+        pkgs:
         import ./packages.nix {
           inherit pkgs;
 
-          pwndbgPackage =
-            pwndbg.packages.${pkgs.stdenv.hostPlatform.system}.default;
+          pwndbgPackage = pwndbg.packages.${pkgs.stdenv.hostPlatform.system}.default;
         };
     in
     {
       # Persistent installation via Home Manager
-      homeModules.default = { pkgs, ... }: {
-        home.packages = pwnPackages pkgs;
-      };
+      homeModules.default =
+        { pkgs, ... }:
+        {
+          home.packages = pwnPackages pkgs;
+        };
 
       # Temporary environment via nix develop
-      devShells = forAllSystems (system:
+      devShells = forAllSystems (
+        system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
         in
@@ -53,4 +55,3 @@
       );
     };
 }
-
